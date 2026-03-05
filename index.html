@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trắc nghiệm lịch sử - xáo trộn câu hỏi (chuẩn)</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background: #f0f4fa; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .container { max-width: 1000px; width: 100%; background: white; border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); padding: 30px; }
+        h1 { color: #0a3147; text-align: center; margin-top: 0; }
+        .upload-card { background: #e2edf7; border-radius: 30px; padding: 30px; text-align: center; border: 2px dashed #1e6f9f; margin-bottom: 25px; }
+        .file-label { background: #1e6f9f; color: white; padding: 14px 40px; border-radius: 60px; cursor: pointer; display: inline-block; font-weight: 600; font-size: 1.1rem; }
+        .file-label input { display: none; }
+        #fileInfo { margin-top: 15px; color: #0d3f5c; }
+        .options-panel { display: flex; gap: 25px; justify-content: center; margin: 25px 0; flex-wrap: wrap; }
+        .options-panel label { background: #e6f0fa; padding: 10px 25px; border-radius: 40px; cursor: pointer; font-weight: 500; }
+        button { background: #0a3147; color: white; border: none; padding: 15px 50px; border-radius: 60px; font-size: 1.2rem; font-weight: 700; cursor: pointer; box-shadow: 0 8px 20px rgba(10,49,71,0.3); transition: 0.2s; margin: 15px 0; }
+        button:hover { background: #124b6e; transform: scale(1.02); }
+        .status { background: #d9e9fa; border-left: 6px solid #1e6f9f; padding: 18px; border-radius: 18px; margin: 20px 0; font-weight: 500; }
+        .quiz-wrapper { margin-top: 30px; border-top: 3px solid #cbdbe9; padding-top: 30px; }
+        .question-card { background: white; border: 1px solid #c9ddec; border-radius: 24px; padding: 25px; margin-bottom: 25px; box-shadow: 0 5px 12px rgba(0,0,0,0.03); }
+        .q-title { font-weight: 700; font-size: 1.2rem; color: #0a3147; margin-bottom: 20px; }
+        .options { display: flex; flex-direction: column; gap: 15px; margin-left: 25px; }
+        .opt-item { display: flex; align-items: center; gap: 12px; }
+        .opt-item input[type=radio] { width: 20px; height: 20px; accent-color: #1e6f9f; }
+        .correct-highlight { background-color: #d0f0d0; border-radius: 40px; padding: 5px 15px; }
+        .action-bar { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 30px 0; }
+        .score-popup { position: fixed; top: 30%; left: 50%; transform: translate(-50%, -30%); background: white; box-shadow: 0 25px 50px rgba(0,0,0,0.3); padding: 30px 50px; border-radius: 50px; z-index: 1000; text-align: center; border: 3px solid #1e6f9f; }
+        .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index: 999; }
+        .hidden { display: none; }
+        .close-popup { background: #1e6f9f; color: white; border: none; padding: 12px 40px; border-radius: 40px; margin-top: 20px; cursor: pointer; font-weight: 600; }
+        .footer { font-size: 0.9rem; color: #5e6f82; text-align: center; margin-top: 50px; border-top: 1px solid #d0ddee; padding-top: 20px; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1>📚 XÁO TRỘN ĐỀ THI TRẮC NGHIỆM (Đánh số lại)</h1>
+    <div class="upload-card" id="dropZone">
+        <label class="file-label">
+            📂 CHỌN FILE DOCX / PDF
+            <input type="file" id="fileInput" accept=".docx,.pdf">
+        </label>
+        <div id="fileInfo">Chưa chọn file</div>
+        <p style="color:#145a82;">Kéo thả file vào đây</p>
+    </div>
+
+    <div class="options-panel">
+        <label><input type="checkbox" id="shuffleQ" checked> 🔀 Xáo trộn câu hỏi</label>
+        <label><input type="checkbox" id="shuffleOpt" checked> 🔄 Xáo trộn đáp án trong câu</label>
+    </div>
+
+    <div style="text-align: center;">
+        <button id="processBtn">🚀 XỬ LÝ VÀ XÁO TRỘN</button>
+    </div>
+
+    <div id="status" class="status">⏳ Sẵn sàng. Tải file lên và nhấn xử lý.</div>
+
+    <div id="quizSection" class="quiz-wrapper hidden">
+        <h2>📋 BÀI TẬP ĐÃ XÁO TRỘN</h2>
+        <div id="questionsContainer"></div>
+        <div class="action-bar">
+            <button id="submitBtn">📤 NỘP BÀI - XEM ĐIỂM</button>
+            <button id="showAnsBtn">🔍 HIỂN THỊ ĐÁP ÁN ĐÚNG</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        ⚡ Định dạng hỗ trợ: Câu hỏi bắt đầu bằng "Câu X:" và các lựa chọn A., B., C., D. Đáp án đúng có dấu * (ví dụ: *D. Nhật Bản). Sau xử lý, số câu sẽ được đánh lại từ 1.
+    </div>
+</div>
+
+<!-- Popup điểm -->
+<div id="overlay" class="overlay hidden"></div>
+<div id="scorePopup" class="score-popup hidden">
+    <h2>🎯 KẾT QUẢ</h2>
+    <p id="scoreText" style="font-size: 2.8rem; font-weight: 800;">0/0</p>
+    <p id="percentText" style="font-size: 1.8rem;">0%</p>
+    <button class="close-popup" id="closePopup">Đóng</button>
+</div>
+
+<script>
+    (function() {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+        // DOM elements
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const dropZone = document.getElementById('dropZone');
+        const processBtn = document.getElementById('processBtn');
+        const statusDiv = document.getElementById('status');
+        const quizSection = document.getElementById('quizSection');
+        const questionsContainer = document.getElementById('questionsContainer');
+        const submitBtn = document.getElementById('submitBtn');
+        const showAnsBtn = document.getElementById('showAnsBtn');
+        const shuffleQ = document.getElementById('shuffleQ');
+        const shuffleOpt = document.getElementById('shuffleOpt');
+        const overlay = document.getElementById('overlay');
+        const scorePopup = document.getElementById('scorePopup');
+        const scoreText = document.getElementById('scoreText');
+        const percentText = document.getElementById('percentText');
+        const closePopup = document.getElementById('closePopup');
+
+        let originalQuestions = [];
+        let displayedQuestions = [];
+
+        closePopup.addEventListener('click', () => {
+            overlay.classList.add('hidden');
+            scorePopup.classList.add('hidden');
+        });
+
+        // Kéo thả file
+        dropZone.addEventListener('dragover', e => e.preventDefault());
+        dropZone.addEventListener('drop', e => {
+            e.preventDefault();
+            const file = e.dataTransfer.files[0];
+            if (file && (file.name.endsWith('.docx') || file.name.endsWith('.pdf'))) {
+                fileInput.files = e.dataTransfer.files;
+                fileInfo.innerText = `📁 ${file.name} (${(file.size/1024).toFixed(1)} KB)`;
+            } else {
+                alert('Chỉ chấp nhận file .docx hoặc .pdf');
+            }
+        });
+
+        fileInput.addEventListener('change', () => {
+            const f = fileInput.files[0];
+            fileInfo.innerText = f ? `📁 ${f.name} (${(f.size/1024).toFixed(1)} KB)` : 'Chưa chọn file';
+        });
+
+        // Xử lý chính
+        processBtn.addEventListener('click', async () => {
+            const file = fileInput.files[0];
+            if (!file) {
+                statusDiv.innerHTML = '⚠️ Vui lòng chọn file!';
+                return;
+            }
+
+            statusDiv.innerHTML = '⏳ Đang đọc file...';
+            processBtn.disabled = true;
+
+            try {
+                let rawText = '';
+                if (file.name.endsWith('.docx')) {
+                    rawText = await readDocx(file);
+                } else {
+                    rawText = await readPdf(file);
+                }
+
+                statusDiv.innerHTML = '🔍 Đang phân tích câu hỏi...';
+                const questions = parseQuestionsFromText(rawText);
+                
+                if (questions.length === 0) {
+                    throw new Error('Không tìm thấy câu hỏi nào. Kiểm tra định dạng file.');
+                }
+
+                originalQuestions = questions;
+                statusDiv.innerHTML = `✅ Tìm thấy ${questions.length} câu. Đang xáo trộn...`;
+
+                // Xáo trộn theo tùy chọn
+                let processed = questions.map(q => ({ ...q, options: [...q.options] }));
+                
+                if (shuffleQ.checked) {
+                    processed = shuffleArray(processed);
+                }
+                
+                if (shuffleOpt.checked) {
+                    processed = processed.map(q => shuffleOptionsInQuestion(q));
+                }
+
+                displayedQuestions = processed;
+                renderQuestions(displayedQuestions);
+                quizSection.classList.remove('hidden');
+                statusDiv.innerHTML = '🎉 Thành công! Bạn có thể làm bài bên dưới.';
+            } catch (err) {
+                statusDiv.innerHTML = `❌ Lỗi: ${err.message}`;
+                console.error(err);
+            } finally {
+                processBtn.disabled = false;
+            }
+        });
+
+        // Đọc DOCX
+        async function readDocx(file) {
+            const ab = await file.arrayBuffer();
+            const result = await mammoth.extractRawText({ arrayBuffer: ab });
+            return result.value;
+        }
+
+        // Đọc PDF
+        async function readPdf(file) {
+            const ab = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument({ data: ab }).promise;
+            let text = '';
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const content = await page.getTextContent();
+                text += content.items.map(item => item.str).join(' ') + '\n';
+            }
+            return text;
+        }
+
+        // Hàm parse chuyên biệt cho định dạng "Câu X:" và các lựa chọn A., B., C., D.
+        // Đồng thời loại bỏ "Câu X:" khỏi nội dung câu hỏi
+        function parseQuestionsFromText(text) {
+            const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l !== '');
+            const questions = [];
+            let i = 0;
+            const n = lines.length;
+
+            while (i < n) {
+                // Tìm dòng bắt đầu bằng "Câu" (có thể có số)
+                if (/^câu\s+\d+/i.test(lines[i])) {
+                    // Bắt đầu một câu hỏi
+                    let questionLines = [];
+                    // Gom các dòng cho đến khi gặp dòng bắt đầu bằng "A."
+                    questionLines.push(lines[i]);
+                    i++;
+                    
+                    // Đọc tiếp cho đến khi gặp dòng bắt đầu bằng A. (lựa chọn đầu tiên)
+                    while (i < n && !/^[A-D]\./i.test(lines[i]) && !/^\*?[A-D]\./i.test(lines[i])) {
+                        questionLines.push(lines[i]);
+                        i++;
+                    }
+                    
+                    // Xử lý phần câu hỏi: loại bỏ "Câu X:" khỏi dòng đầu tiên
+                    if (questionLines.length > 0) {
+                        let firstLine = questionLines[0];
+                        // Loại bỏ "Câu X:" (không phân biệt hoa thường, có thể có dấu cách)
+                        firstLine = firstLine.replace(/^câu\s+\d+:\s*/i, '').trim();
+                        questionLines[0] = firstLine;
+                    }
+                    
+                    // Bây giờ i đang ở dòng A. hoặc tương tự
+                    let optionLines = [];
+                    // Đọc các dòng lựa chọn (A., B., C., D.) cho đến khi gặp dòng "Câu" mới hoặc hết file
+                    while (i < n && !/^câu\s+\d+/i.test(lines[i])) {
+                        if (/^[A-D]\./i.test(lines[i]) || /^\*?[A-D]\./i.test(lines[i])) {
+                            optionLines.push(lines[i]);
+                        } else {
+                            // Nếu có dòng lạ giữa các lựa chọn (không xảy ra trong file mẫu), bỏ qua
+                        }
+                        i++;
+                    }
+
+                    if (optionLines.length > 0) {
+                        // Ghép nội dung câu hỏi
+                        const questionText = questionLines.join(' ').trim();
+                        
+                        // Xử lý từng lựa chọn
+                        const options = [];
+                        let correctIndex = -1;
+                        
+                        optionLines.forEach((line, idx) => {
+                            // Xác định đáp án đúng: có dấu * ở bất kỳ đâu
+                            let isCorrect = line.includes('*');
+                            // Loại bỏ dấu *
+                            let cleanLine = line.replace(/\*/g, '').trim();
+                            // Loại bỏ phần "A." hoặc "A. " (giữ lại nội dung)
+                            cleanLine = cleanLine.replace(/^[A-D]\.\s*/i, '').trim();
+                            if (cleanLine === '') cleanLine = line.replace(/\*/g, '').trim(); // fallback
+                            options.push(cleanLine);
+                            if (isCorrect) correctIndex = idx;
+                        });
+
+                        // Nếu không tìm thấy đáp án đúng, gán câu đầu (ít khi xảy ra với file mẫu)
+                        if (correctIndex === -1 && options.length > 0) {
+                            correctIndex = 0;
+                        }
+
+                        questions.push({
+                            questionText,
+                            options,
+                            correctIndex
+                        });
+                    }
+                } else {
+                    i++;
+                }
+            }
+            return questions;
+        }
+
+        // Xáo trộn mảng
+        function shuffleArray(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        // Xáo trộn đáp án trong câu
+        function shuffleOptionsInQuestion(q) {
+            const opts = q.options;
+            const correct = q.correctIndex;
+            const indices = Array.from({ length: opts.length }, (_, i) => i);
+            const shuffled = shuffleArray(indices);
+            const newOpts = shuffled.map(i => opts[i]);
+            const newCorrect = shuffled.findIndex(i => i === correct);
+            return { ...q, options: newOpts, correctIndex: newCorrect };
+        }
+
+        // Hiển thị câu hỏi (đánh số lại từ 1)
+        function renderQuestions(questions) {
+            let html = '';
+            questions.forEach((q, idx) => {
+                html += `<div class="question-card">`;
+                html += `<div class="q-title">Câu ${idx+1}: ${q.questionText}</div>`;
+                html += `<div class="options">`;
+                q.options.forEach((opt, optIdx) => {
+                    const letter = String.fromCharCode(65 + optIdx);
+                    html += `
+                        <div class="opt-item">
+                            <input type="radio" name="q${idx}" value="${optIdx}" id="q${idx}_${optIdx}">
+                            <label for="q${idx}_${optIdx}">${letter}. ${opt}</label>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+                html += `<div id="correct-${idx}" style="display:none; margin-top:10px; color:#0a7e3a; font-weight:600;">✅ Đáp án đúng: ${String.fromCharCode(65 + q.correctIndex)}</div>`;
+                html += `</div>`;
+            });
+            questionsContainer.innerHTML = html;
+        }
+
+        // Nộp bài
+        submitBtn.addEventListener('click', () => {
+            const total = displayedQuestions.length;
+            let correct = 0;
+            displayedQuestions.forEach((q, idx) => {
+                const radios = document.getElementsByName(`q${idx}`);
+                let selected = null;
+                for (let r of radios) if (r.checked) { selected = r.value; break; }
+                if (selected !== null && parseInt(selected) === q.correctIndex) correct++;
+            });
+            const percent = total ? ((correct / total) * 100).toFixed(1) : 0;
+            scoreText.innerText = `${correct}/${total}`;
+            percentText.innerText = `${percent}%`;
+            overlay.classList.remove('hidden');
+            scorePopup.classList.remove('hidden');
+        });
+
+        // Hiển thị đáp án
+        showAnsBtn.addEventListener('click', () => {
+            displayedQuestions.forEach((q, idx) => {
+                const correctDiv = document.getElementById(`correct-${idx}`);
+                if (correctDiv) correctDiv.style.display = 'block';
+                const radios = document.getElementsByName(`q${idx}`);
+                radios.forEach((r, i) => {
+                    if (i === q.correctIndex) {
+                        r.parentElement.classList.add('correct-highlight');
+                    }
+                });
+            });
+        });
+
+    })();
+</script>
+</body>
+</html>
