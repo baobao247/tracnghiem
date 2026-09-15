@@ -12,7 +12,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
 :root{
   --bg:#f4f6fb;--surface:#ffffff;--surface-2:#f8fafc;--surface-3:#eef2f7;
   --text:#0f172a;--text-muted:#64748b;
@@ -38,7 +37,6 @@ body.dark{
   --warning-soft:rgba(245,158,11,.2);
   --danger-soft:rgba(239,68,68,.2);
 }
-
 html{scroll-behavior:smooth}
 body{
   font-family:'Inter',system-ui,sans-serif;
@@ -56,126 +54,48 @@ body::before{
 }
 body.dark::before{opacity:.6}
 @keyframes bgMove{0%{transform:translate(0,0) scale(1)}100%{transform:translate(2%,-2%) scale(1.05)}}
-
 .app{max-width:900px;margin:0 auto}
 
-/* HEADER */
-.app-header{
-  display:flex;justify-content:space-between;align-items:center;
-  gap:14px;flex-wrap:wrap;margin-bottom:22px;
-}
+.app-header{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:22px}
 .brand{display:flex;align-items:center;gap:12px}
-.brand-logo{
-  width:48px;height:48px;border-radius:14px;
-  background:var(--primary-grad);color:#fff;
-  display:grid;place-items:center;font-size:20px;
-  box-shadow:0 10px 24px -8px rgba(14,165,233,.5);
-  position:relative;overflow:hidden;
-}
-.brand-logo::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.35) 50%,transparent 60%);
-  animation:shine 4s linear infinite;
-}
+.brand-logo{width:48px;height:48px;border-radius:14px;background:var(--primary-grad);color:#fff;display:grid;place-items:center;font-size:20px;box-shadow:0 10px 24px -8px rgba(14,165,233,.5);position:relative;overflow:hidden}
+.brand-logo::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.35) 50%,transparent 60%);animation:shine 4s linear infinite}
 @keyframes shine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
 .brand h1{font-size:1.2rem;font-weight:800;letter-spacing:-.02em}
 .brand p{font-size:.75rem;color:var(--text-muted);font-weight:500}
 .header-actions{display:flex;gap:8px;align-items:center}
-.icon-btn{
-  width:40px;height:40px;border-radius:12px;
-  background:var(--surface);border:1px solid var(--border);
-  color:var(--text);cursor:pointer;
-  display:grid;place-items:center;font-size:15px;
-  transition:var(--tr);
-}
+.icon-btn{width:40px;height:40px;border-radius:12px;background:var(--surface);border:1px solid var(--border);color:var(--text);cursor:pointer;display:grid;place-items:center;font-size:15px;transition:var(--tr)}
 .icon-btn:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-2px);box-shadow:var(--shadow)}
 
-/* CARD */
-.card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius-lg);padding:24px;
-  box-shadow:var(--shadow);margin-bottom:16px;
-}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow);margin-bottom:16px}
 
-/* TABS INPUT */
-.input-tabs{
-  display:flex;gap:4px;padding:4px;background:var(--surface-2);
-  border-radius:14px;margin-bottom:20px;width:fit-content;
-}
-.input-tab{
-  padding:8px 18px;border-radius:10px;border:none;
-  background:transparent;color:var(--text-muted);
-  font-family:inherit;font-weight:600;font-size:.85rem;
-  cursor:pointer;transition:var(--tr);
-  display:inline-flex;align-items:center;gap:8px;
-}
+.input-tabs{display:flex;gap:4px;padding:4px;background:var(--surface-2);border-radius:14px;margin-bottom:20px;width:fit-content}
+.input-tab{padding:8px 18px;border-radius:10px;border:none;background:transparent;color:var(--text-muted);font-family:inherit;font-weight:600;font-size:.85rem;cursor:pointer;transition:var(--tr);display:inline-flex;align-items:center;gap:8px}
 .input-tab.active{background:var(--surface);color:var(--primary);box-shadow:var(--shadow-sm)}
 .input-tab:hover:not(.active){color:var(--text)}
 
-/* DROP ZONE */
-.dropzone{
-  border:2px dashed var(--border-2);border-radius:18px;
-  padding:36px 20px;text-align:center;
-  background:var(--surface-2);
-  transition:var(--tr);cursor:pointer;
-}
-.dropzone:hover,.dropzone.drag{
-  border-color:var(--primary);background:var(--primary-soft);
-}
-.dropzone .icon{
-  font-size:42px;color:var(--primary);margin-bottom:12px;
-  display:block;
-}
+.dropzone{border:2px dashed var(--border-2);border-radius:18px;padding:36px 20px;text-align:center;background:var(--surface-2);transition:var(--tr);cursor:pointer}
+.dropzone:hover,.dropzone.drag{border-color:var(--primary);background:var(--primary-soft)}
+.dropzone .icon{font-size:42px;color:var(--primary);margin-bottom:12px;display:block}
 .dropzone .title{font-weight:700;font-size:1rem;margin-bottom:4px}
 .dropzone .sub{font-size:.82rem;color:var(--text-muted)}
-.file-info{
-  margin-top:14px;padding:10px 16px;
-  background:var(--primary-soft);color:var(--primary);
-  border-radius:12px;font-size:.85rem;font-weight:600;
-  display:inline-flex;align-items:center;gap:8px;
-  word-break:break-all;
-}
+.file-info{margin-top:14px;padding:10px 16px;background:var(--primary-soft);color:var(--primary);border-radius:12px;font-size:.85rem;font-weight:600;display:inline-flex;align-items:center;gap:8px;word-break:break-all}
 .file-info:empty{display:none}
 
-/* TEXTAREA */
-.paste-area{
-  width:100%;min-height:220px;padding:16px;
-  font-family:'JetBrains Mono','Courier New',monospace;
-  font-size:.88rem;line-height:1.6;
-  border:1.5px solid var(--border);border-radius:14px;
-  background:var(--surface-2);color:var(--text);
-  resize:vertical;outline:none;transition:var(--tr);
-}
+.paste-area{width:100%;min-height:220px;padding:16px;font-family:'JetBrains Mono','Courier New',monospace;font-size:.88rem;line-height:1.6;border:1.5px solid var(--border);border-radius:14px;background:var(--surface-2);color:var(--text);resize:vertical;outline:none;transition:var(--tr)}
 .paste-area:focus{border-color:var(--primary);background:var(--surface);box-shadow:0 0 0 4px var(--primary-soft)}
 
-/* OPTIONS */
 .options{display:flex;flex-direction:column;gap:10px;margin:18px 0}
-.opt-check{
-  display:flex;align-items:center;gap:12px;
-  padding:12px 16px;border-radius:14px;
-  background:var(--surface-2);border:1.5px solid transparent;
-  cursor:pointer;transition:var(--tr);user-select:none;
-}
+.opt-check{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:14px;background:var(--surface-2);border:1.5px solid transparent;cursor:pointer;transition:var(--tr);user-select:none}
 .opt-check:hover{border-color:var(--border-2)}
 .opt-check input{width:18px;height:18px;accent-color:var(--primary);cursor:pointer;flex-shrink:0}
 .opt-check .label{font-weight:600;font-size:.9rem}
 .opt-check .desc{font-size:.75rem;color:var(--text-muted);margin-top:2px}
 
-/* BUTTONS */
-.btn{
-  padding:11px 20px;border:1.5px solid var(--border);
-  border-radius:12px;background:var(--surface);color:var(--text);
-  font-family:inherit;font-weight:600;font-size:.88rem;
-  cursor:pointer;transition:var(--tr);
-  display:inline-flex;align-items:center;gap:8px;
-  white-space:nowrap;
-}
+.btn{padding:11px 20px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-family:inherit;font-weight:600;font-size:.88rem;cursor:pointer;transition:var(--tr);display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
 .btn:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.btn-primary{
-  background:var(--primary-grad);color:#fff;border-color:transparent;
-  box-shadow:0 8px 20px -8px rgba(14,165,233,.6);
-}
+.btn-primary{background:var(--primary-grad);color:#fff;border-color:transparent;box-shadow:0 8px 20px -8px rgba(14,165,233,.6)}
 .btn-primary:hover{color:#fff;box-shadow:0 12px 26px -8px rgba(14,165,233,.8)}
 .btn-success{background:linear-gradient(135deg,#10b981,#059669);color:#fff;border-color:transparent}
 .btn-success:hover{color:#fff;box-shadow:0 12px 26px -8px rgba(16,185,129,.6)}
@@ -184,248 +104,91 @@ body.dark::before{opacity:.6}
 .btn-lg{padding:14px 28px;font-size:.95rem;border-radius:14px}
 .btn-cta{width:100%;justify-content:center}
 
-/* PROGRESS */
-.progress{
-  margin-top:14px;height:6px;border-radius:999px;
-  background:var(--border);overflow:hidden;
-}
-.progress-fill{
-  height:100%;width:0;border-radius:999px;
-  background:var(--primary-grad);transition:width .3s;
-}
-.status-msg{
-  margin-top:10px;font-size:.82rem;color:var(--text-muted);
-  text-align:center;font-weight:500;
-}
+.progress{margin-top:14px;height:6px;border-radius:999px;background:var(--border);overflow:hidden}
+.progress-fill{height:100%;width:0;border-radius:999px;background:var(--primary-grad);transition:width .3s}
+.status-msg{margin-top:10px;font-size:.82rem;color:var(--text-muted);text-align:center;font-weight:500}
 .status-msg.error{color:var(--danger)}
 .status-msg.success{color:var(--success)}
 
-/* PREVIEW BOX */
-.preview{
-  margin-top:18px;padding:16px;
-  background:var(--surface-2);border-radius:14px;
-  border:1px solid var(--border);
-}
-.preview-title{
-  font-weight:700;font-size:.9rem;margin-bottom:10px;
-  display:flex;align-items:center;gap:8px;
-}
+.preview{margin-top:18px;padding:16px;background:var(--surface-2);border-radius:14px;border:1px solid var(--border)}
+.preview-title{font-weight:700;font-size:.9rem;margin-bottom:10px;display:flex;align-items:center;gap:8px}
 .preview-title i{color:var(--primary)}
-.preview-stats{
-  display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;
-  font-size:.85rem;
-}
-.preview-stats .s{
-  padding:4px 10px;border-radius:999px;
-  background:var(--primary-soft);color:var(--primary);
-  font-weight:600;
-}
+.preview-stats{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;font-size:.85rem}
+.preview-stats .s{padding:4px 10px;border-radius:999px;background:var(--primary-soft);color:var(--primary);font-weight:600}
 .preview-stats .s.warn{background:var(--warning-soft);color:var(--warning)}
 .preview-list{max-height:180px;overflow-y:auto;font-size:.82rem}
 .preview-list::-webkit-scrollbar{width:6px}
 .preview-list::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:3px}
-.preview-list .item{
-  padding:6px 10px;border-radius:8px;
-  color:var(--text-muted);
-  border-left:3px solid var(--border);
-  margin-bottom:4px;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
+.preview-list .item{padding:6px 10px;border-radius:8px;color:var(--text-muted);border-left:3px solid var(--border);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .preview-list .item.warn{border-left-color:var(--warning);color:var(--warning)}
 
-/* QUIZ TOPBAR */
-.quiz-topbar{
-  position:sticky;top:12px;z-index:100;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius);padding:14px 18px;
-  box-shadow:var(--shadow);margin-bottom:20px;
-  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
-}
-.quiz-topbar .progress-info{
-  flex:1;min-width:180px;
-  display:flex;flex-direction:column;gap:6px;
-}
-.quiz-topbar .progress-text{
-  display:flex;justify-content:space-between;
-  font-size:.78rem;font-weight:600;color:var(--text-muted);
-}
+.quiz-topbar{position:sticky;top:12px;z-index:100;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;box-shadow:var(--shadow);margin-bottom:20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.quiz-topbar .progress-info{flex:1;min-width:180px;display:flex;flex-direction:column;gap:6px}
+.quiz-topbar .progress-text{display:flex;justify-content:space-between;font-size:.78rem;font-weight:600;color:var(--text-muted)}
 .quiz-topbar .progress-text .strong{color:var(--primary);font-weight:700}
 .quiz-topbar .progress{height:8px;margin:0}
-.quiz-topbar .timer{
-  display:flex;align-items:center;gap:8px;
-  padding:8px 14px;border-radius:999px;
-  background:var(--primary-soft);color:var(--primary);
-  font-family:'JetBrains Mono',monospace;
-  font-weight:700;font-size:.88rem;
-}
+.quiz-topbar .timer{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--primary-soft);color:var(--primary);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.88rem}
 .quiz-topbar .timer.hidden{display:none}
 .quiz-topbar .actions{display:flex;gap:8px;flex-wrap:wrap}
 
-/* QUESTION CARD */
-.question-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-left:4px solid var(--primary);
-  border-radius:var(--radius);padding:20px;
-  margin-bottom:14px;box-shadow:var(--shadow-sm);
-  transition:var(--tr);scroll-margin-top:140px;
-}
-.question-card.correct{
-  border-left-color:var(--success);
-  background:linear-gradient(90deg,var(--success-soft) 0%,var(--surface) 30%);
-}
-.question-card.wrong{
-  border-left-color:var(--danger);
-  background:linear-gradient(90deg,var(--danger-soft) 0%,var(--surface) 30%);
-}
-.question-card.skipped{
-  border-left-color:var(--warning);
-}
-.q-num{
-  display:inline-flex;align-items:center;justify-content:center;
-  min-width:32px;height:32px;padding:0 10px;
-  border-radius:10px;background:var(--primary-grad);color:#fff;
-  font-weight:700;font-size:.82rem;
-  margin-right:10px;flex-shrink:0;
-}
-.q-title{
-  display:flex;align-items:flex-start;gap:0;
-  font-weight:600;font-size:1rem;line-height:1.55;
-  margin-bottom:16px;color:var(--text);
-}
+.question-card{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:var(--radius);padding:20px;margin-bottom:14px;box-shadow:var(--shadow-sm);transition:var(--tr);scroll-margin-top:140px}
+.question-card.correct{border-left-color:var(--success);background:linear-gradient(90deg,var(--success-soft) 0%,var(--surface) 30%)}
+.question-card.wrong{border-left-color:var(--danger);background:linear-gradient(90deg,var(--danger-soft) 0%,var(--surface) 30%)}
+.question-card.skipped{border-left-color:var(--warning)}
+.question-card.invalid{border-left-color:#a855f7;background:linear-gradient(90deg,rgba(168,85,247,.08) 0%,var(--surface) 30%)}
+.q-num{display:inline-flex;align-items:center;justify-content:center;min-width:32px;height:32px;padding:0 10px;border-radius:10px;background:var(--primary-grad);color:#fff;font-weight:700;font-size:.82rem;margin-right:10px;flex-shrink:0}
+.q-title{display:flex;align-items:flex-start;gap:0;font-weight:600;font-size:1rem;line-height:1.55;margin-bottom:16px;color:var(--text)}
 .q-options{display:flex;flex-direction:column;gap:8px}
 
-.opt{
-  display:flex;align-items:flex-start;gap:12px;
-  padding:12px 14px;border-radius:12px;
-  background:var(--surface-2);border:1.5px solid transparent;
-  cursor:pointer;transition:var(--tr);
-  font-size:.92rem;line-height:1.5;
-}
+.opt{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:12px;background:var(--surface-2);border:1.5px solid transparent;cursor:pointer;transition:var(--tr);font-size:.92rem;line-height:1.5}
 .opt:hover{border-color:var(--primary);background:var(--surface)}
-.opt input[type=radio]{
-  width:18px;height:18px;accent-color:var(--primary);
-  cursor:pointer;flex-shrink:0;margin-top:2px;
-}
-.opt .key{
-  font-weight:800;color:var(--primary);flex-shrink:0;
-  min-width:18px;
-}
+.opt input[type=radio]{width:18px;height:18px;accent-color:var(--primary);cursor:pointer;flex-shrink:0;margin-top:2px}
+.opt .key{font-weight:800;color:var(--primary);flex-shrink:0;min-width:22px}
 .opt.selected{border-color:var(--primary);background:var(--primary-soft)}
-.opt.correct-answer{
-  border-color:var(--success);background:var(--success-soft);
-}
+.opt.correct-answer{border-color:var(--success);background:var(--success-soft)}
 .opt.correct-answer .key{color:var(--success)}
-.opt.wrong-answer{
-  border-color:var(--danger);background:var(--danger-soft);
-  text-decoration:line-through;
-  text-decoration-color:var(--danger);
-  opacity:.85;
-}
+.opt.wrong-answer{border-color:var(--danger);background:var(--danger-soft);text-decoration:line-through;text-decoration-color:var(--danger);opacity:.85}
 .opt.wrong-answer .key{color:var(--danger);text-decoration:none;display:inline-block}
 
-.answer-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:6px 12px;border-radius:999px;
-  font-size:.78rem;font-weight:700;
-  margin-top:10px;
-}
+.answer-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:.78rem;font-weight:700;margin-top:10px}
 .answer-badge.ok{background:var(--success-soft);color:var(--success)}
 .answer-badge.bad{background:var(--danger-soft);color:var(--danger)}
+.answer-badge.invalid{background:rgba(168,85,247,.15);color:#a855f7}
 
-/* NAVIGATOR */
-.navigator{
-  position:fixed;bottom:20px;right:20px;z-index:90;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:18px;padding:12px;
-  box-shadow:var(--shadow-lg);
-  max-width:280px;
-}
-.navigator-head{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:0 4px 8px;border-bottom:1px solid var(--border);
-  margin-bottom:8px;
-}
+.navigator{position:fixed;bottom:20px;right:20px;z-index:90;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:12px;box-shadow:var(--shadow-lg);max-width:280px}
+.navigator-head{display:flex;justify-content:space-between;align-items:center;padding:0 4px 8px;border-bottom:1px solid var(--border);margin-bottom:8px}
 .navigator-head .title{font-size:.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase}
-.navigator-head button{
-  width:24px;height:24px;border-radius:6px;border:none;
-  background:transparent;color:var(--text-muted);cursor:pointer;
-  font-size:11px;
-}
+.navigator-head button{width:24px;height:24px;border-radius:6px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;font-size:11px}
 .navigator-head button:hover{background:var(--danger-soft);color:var(--danger)}
-.navigator-grid{
-  display:grid;grid-template-columns:repeat(6,1fr);gap:4px;
-  max-height:180px;overflow-y:auto;
-}
+.navigator-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;max-height:180px;overflow-y:auto}
 .navigator-grid::-webkit-scrollbar{width:5px}
 .navigator-grid::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:3px}
-.nav-dot{
-  aspect-ratio:1;border-radius:8px;border:none;
-  background:var(--surface-2);color:var(--text-muted);
-  font-family:inherit;font-weight:700;font-size:.72rem;
-  cursor:pointer;transition:var(--tr);
-  display:grid;place-items:center;
-  min-height:28px;
-}
+.nav-dot{aspect-ratio:1;border-radius:8px;border:none;background:var(--surface-2);color:var(--text-muted);font-family:inherit;font-weight:700;font-size:.72rem;cursor:pointer;transition:var(--tr);display:grid;place-items:center;min-height:28px}
 .nav-dot:hover{background:var(--primary-soft);color:var(--primary)}
 .nav-dot.answered{background:var(--primary);color:#fff}
 .nav-dot.correct{background:var(--success);color:#fff}
 .nav-dot.wrong{background:var(--danger);color:#fff}
+.nav-dot.invalid{background:#a855f7;color:#fff}
 .nav-dot.current{outline:2px solid var(--primary);outline-offset:2px}
 
-/* MODAL */
-.modal-backdrop{
-  position:fixed;inset:0;background:rgba(15,23,42,.65);
-  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-  z-index:1000;display:grid;place-items:center;padding:20px;
-  opacity:0;visibility:hidden;transition:var(--tr);
-}
+.modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:1000;display:grid;place-items:center;padding:20px;opacity:0;visibility:hidden;transition:var(--tr)}
 .modal-backdrop.open{opacity:1;visibility:visible}
-.modal{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:24px;padding:26px;width:100%;max-width:520px;
-  box-shadow:var(--shadow-lg);transform:scale(.95);transition:var(--tr);
-  max-height:88vh;overflow-y:auto;
-}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:26px;width:100%;max-width:520px;box-shadow:var(--shadow-lg);transform:scale(.95);transition:var(--tr);max-height:88vh;overflow-y:auto}
 .modal-backdrop.open .modal{transform:scale(1)}
 .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
 .modal-head h3{font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:10px}
 .modal-head h3 i{color:var(--primary)}
-.modal-head .close{
-  width:32px;height:32px;border-radius:10px;border:none;
-  background:var(--surface-2);color:var(--text-muted);cursor:pointer;transition:var(--tr);
-}
+.modal-head .close{width:32px;height:32px;border-radius:10px;border:none;background:var(--surface-2);color:var(--text-muted);cursor:pointer;transition:var(--tr)}
 .modal-head .close:hover{background:var(--danger);color:#fff}
 
-/* SCORE */
-.score-hero{
-  text-align:center;padding:20px 0 24px;
-  background:linear-gradient(135deg,var(--primary-soft),transparent);
-  border-radius:18px;margin-bottom:16px;
-}
-.score-hero .num{
-  font-family:'JetBrains Mono',monospace;
-  font-size:3.6rem;font-weight:800;line-height:1;
-  background:var(--primary-grad);
-  -webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
+.score-hero{text-align:center;padding:20px 0 24px;background:linear-gradient(135deg,var(--primary-soft),transparent);border-radius:18px;margin-bottom:16px}
+.score-hero .num{font-family:'JetBrains Mono',monospace;font-size:3.6rem;font-weight:800;line-height:1;background:var(--primary-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .score-hero .of{font-size:1.1rem;color:var(--text-muted);font-weight:600;margin-left:6px}
-.score-hero .pct{
-  font-size:1.6rem;font-weight:700;color:var(--primary);
-  margin-top:8px;
-}
-.score-hero .rank{
-  display:inline-block;margin-top:12px;
-  padding:6px 18px;border-radius:999px;
-  background:var(--primary-grad);color:#fff;
-  font-weight:700;font-size:.88rem;
-}
+.score-hero .pct{font-size:1.6rem;font-weight:700;color:var(--primary);margin-top:8px}
+.score-hero .rank{display:inline-block;margin-top:12px;padding:6px 18px;border-radius:999px;background:var(--primary-grad);color:#fff;font-weight:700;font-size:.88rem}
 
 .score-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
-.score-stat{
-  padding:14px 10px;border-radius:14px;text-align:center;
-  background:var(--surface-2);border:1px solid var(--border);
-}
+.score-stat{padding:14px 10px;border-radius:14px;text-align:center;background:var(--surface-2);border:1px solid var(--border)}
 .score-stat .v{font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:800;line-height:1}
 .score-stat .l{font-size:.7rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-top:6px;letter-spacing:.04em}
 .score-stat.ok .v{color:var(--success)}
@@ -435,67 +198,27 @@ body.dark::before{opacity:.6}
 .modal-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:16px}
 .modal-actions .btn{flex:1;justify-content:center;min-width:120px}
 
-/* HELP */
 .help-section{margin-bottom:18px}
-.help-section h4{
-  font-size:.85rem;font-weight:700;color:var(--primary);
-  text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;
-}
-.help-section pre{
-  background:var(--surface-2);border:1px solid var(--border);
-  border-radius:10px;padding:12px 14px;
-  font-family:'JetBrains Mono',monospace;
-  font-size:.78rem;line-height:1.6;color:var(--text);
-  overflow-x:auto;
-}
-.help-section ul{
-  padding-left:20px;font-size:.85rem;color:var(--text-muted);line-height:1.7;
-}
+.help-section h4{font-size:.85rem;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.help-section pre{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'JetBrains Mono',monospace;font-size:.78rem;line-height:1.6;color:var(--text);overflow-x:auto}
+.help-section ul{padding-left:20px;font-size:.85rem;color:var(--text-muted);line-height:1.7}
 .help-section ul li{margin-bottom:4px}
-.kbd{
-  display:inline-block;padding:2px 8px;border-radius:6px;
-  background:var(--surface-2);border:1px solid var(--border-2);
-  font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:700;
-  box-shadow:0 2px 0 var(--border-2);
-}
+.kbd{display:inline-block;padding:2px 8px;border-radius:6px;background:var(--surface-2);border:1px solid var(--border-2);font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:700;box-shadow:0 2px 0 var(--border-2)}
 
-/* TOAST */
-.toast-wrap{
-  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-  z-index:2000;display:flex;flex-direction:column-reverse;gap:8px;align-items:center;
-  pointer-events:none;width:min(92vw,420px);
-}
-.toast{
-  background:var(--text);color:var(--surface);
-  padding:12px 20px;border-radius:999px;
-  font-size:.85rem;font-weight:600;
-  box-shadow:var(--shadow-lg);pointer-events:auto;
-  animation:toastIn .3s cubic-bezier(.34,1.56,.64,1);
-  display:flex;align-items:center;gap:10px;
-  max-width:100%;
-}
+.toast-wrap{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:2000;display:flex;flex-direction:column-reverse;gap:8px;align-items:center;pointer-events:none;width:min(92vw,420px)}
+.toast{background:var(--text);color:var(--surface);padding:12px 20px;border-radius:999px;font-size:.85rem;font-weight:600;box-shadow:var(--shadow-lg);pointer-events:auto;animation:toastIn .3s cubic-bezier(.34,1.56,.64,1);display:flex;align-items:center;gap:10px;max-width:100%}
 .toast.error{background:var(--danger);color:#fff}
 .toast.success{background:var(--success);color:#fff}
 .toast.success i{color:#fff}
 @keyframes toastIn{from{opacity:0;transform:translateY(20px) scale(.95)}to{opacity:1;transform:none}}
 
-/* CONFETTI */
-.confetti-piece{
-  position:fixed;width:10px;height:10px;
-  pointer-events:none;z-index:1500;
-  animation:confettiFall linear forwards;
-}
-@keyframes confettiFall{
-  0%{transform:translateY(0) rotate(0);opacity:1}
-  100%{transform:translateY(100vh) rotate(720deg);opacity:0}
-}
+.confetti-piece{position:fixed;width:10px;height:10px;pointer-events:none;z-index:1500;animation:confettiFall linear forwards}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
 
-/* UTILS */
 .hidden{display:none!important}
 .text-muted{color:var(--text-muted)}
 .center{text-align:center}
 
-/* RESPONSIVE */
 @media (max-width:640px){
   body{padding:14px 12px 60px}
   .card{padding:18px;border-radius:18px}
@@ -510,10 +233,7 @@ body.dark::before{opacity:.6}
   .quiz-topbar{padding:10px 12px;top:8px;border-radius:14px}
   .quiz-topbar .actions .btn span.lbl{display:none}
   .quiz-topbar .timer{padding:6px 10px;font-size:.8rem}
-  .navigator{
-    bottom:12px;right:12px;left:12px;
-    max-width:none;border-radius:14px;padding:10px;
-  }
+  .navigator{bottom:12px;right:12px;left:12px;max-width:none;border-radius:14px;padding:10px}
   .navigator-grid{grid-template-columns:repeat(8,1fr);max-height:120px}
   .nav-dot{min-height:24px;font-size:.68rem}
   .score-hero .num{font-size:2.8rem}
@@ -533,13 +253,12 @@ body.dark::before{opacity:.6}
 
 <div class="app">
 
-  <!-- HEADER -->
   <header class="app-header">
     <div class="brand">
       <div class="brand-logo"><i class="fas fa-layer-group"></i></div>
       <div>
         <h1>Luyện Trắc Nghiệm</h1>
-        <p>Đọc file DOCX / PDF · Xáo trộn thông minh</p>
+        <p>Parser v3 · Hỗ trợ A-Z · Đa định dạng</p>
       </div>
     </div>
     <div class="header-actions">
@@ -548,7 +267,6 @@ body.dark::before{opacity:.6}
     </div>
   </header>
 
-  <!-- UPLOAD VIEW -->
   <main id="uploadView">
     <section class="card">
       <div class="input-tabs">
@@ -556,7 +274,6 @@ body.dark::before{opacity:.6}
         <button class="input-tab" data-tab="paste"><i class="fas fa-paste"></i> Dán text</button>
       </div>
 
-      <!-- File tab -->
       <div id="tabFile">
         <div class="dropzone" id="dropzone">
           <i class="fas fa-cloud-arrow-up icon"></i>
@@ -567,21 +284,24 @@ body.dark::before{opacity:.6}
         <div class="file-info" id="fileInfo"></div>
       </div>
 
-      <!-- Paste tab -->
       <div id="tabPaste" class="hidden">
         <textarea class="paste-area" id="pasteArea" placeholder="Dán nội dung đề thi vào đây...
 
 Ví dụ:
-Câu 1: Thủ đô của Việt Nam là gì?
-*A. Hà Nội
+Câu 1: Thủ đô của Việt Nam là?
+A. Hà Nội
 B. Đà Nẵng
-C. TP.HCM
+*C. TP.HCM
 D. Cần Thơ
 
-Câu 2: ..."></textarea>
+Câu 2: 2 + 2 = ?
+A. 3
+B. 4
+C. 5
+D. 6
+Đáp án: B"></textarea>
       </div>
 
-      <!-- Options -->
       <div class="options">
         <label class="opt-check">
           <input type="checkbox" id="shuffleQ" checked>
@@ -594,7 +314,7 @@ Câu 2: ..."></textarea>
           <input type="checkbox" id="shuffleOpt" checked>
           <div>
             <div class="label">🔄 Xáo trộn đáp án trong câu</div>
-            <div class="desc">A/B/C/D được xáo lại, đáp án đúng vẫn giữ nguyên</div>
+            <div class="desc">Đáp án được xáo lại, nhãn A/B/C/D gán lại theo vị trí mới</div>
           </div>
         </label>
       </div>
@@ -608,7 +328,6 @@ Câu 2: ..."></textarea>
       </div>
       <div class="status-msg" id="statusMsg">⏳ Sẵn sàng. Tải file hoặc dán text rồi bấm Xử lý.</div>
 
-      <!-- Preview -->
       <div class="preview hidden" id="previewBox">
         <div class="preview-title"><i class="fas fa-check-circle"></i> Xem trước đề thi</div>
         <div class="preview-stats" id="previewStats"></div>
@@ -617,7 +336,6 @@ Câu 2: ..."></textarea>
     </section>
   </main>
 
-  <!-- QUIZ VIEW -->
   <main id="quizView" class="hidden">
     <div class="quiz-topbar">
       <div class="progress-info">
@@ -634,22 +352,15 @@ Câu 2: ..."></textarea>
         <span id="timerText">00:00</span>
       </div>
       <div class="actions">
-        <button class="btn" id="toggleTimerBtn" title="Ẩn/hiện đồng hồ">
-          <i class="fas fa-eye"></i>
-        </button>
-        <button class="btn" id="backBtn" title="Quay lại">
-          <i class="fas fa-arrow-left"></i>
-        </button>
-        <button class="btn btn-success" id="submitBtn">
-          <i class="fas fa-paper-plane"></i> <span class="lbl">Nộp bài</span>
-        </button>
+        <button class="btn" id="toggleTimerBtn" title="Ẩn/hiện đồng hồ"><i class="fas fa-eye"></i></button>
+        <button class="btn" id="backBtn" title="Quay lại"><i class="fas fa-arrow-left"></i></button>
+        <button class="btn btn-success" id="submitBtn"><i class="fas fa-paper-plane"></i> <span class="lbl">Nộp bài</span></button>
       </div>
     </div>
 
     <div id="questionsContainer"></div>
   </main>
 
-  <!-- NAVIGATOR -->
   <aside class="navigator hidden" id="navigator">
     <div class="navigator-head">
       <span class="title">Câu hỏi</span>
@@ -660,7 +371,6 @@ Câu 2: ..."></textarea>
 
 </div>
 
-<!-- SCORE MODAL -->
 <div class="modal-backdrop" id="scoreModal">
   <div class="modal">
     <div class="modal-head">
@@ -689,7 +399,6 @@ Câu 2: ..."></textarea>
   </div>
 </div>
 
-<!-- HELP MODAL -->
 <div class="modal-backdrop" id="helpModal">
   <div class="modal">
     <div class="modal-head">
@@ -703,14 +412,26 @@ Câu 2: ..."></textarea>
 A. Hà Nội
 B. Đà Nẵng
 *C. TP.HCM
-D. Cần Thơ</pre>
+D. Cần Thơ
+
+Câu 2. 2 + 2 = ?
+A. 3
+B. 4
+C. 5
+D. 6
+Đáp án: B
+
+Question 3: What is 2+2?
+A. 3
+B. 4
+*B. 4</pre>
     </div>
 
     <div class="help-section">
       <h4>✅ Cách đánh dấu đáp án đúng</h4>
       <ul>
-        <li>Dấu <code>*</code> trước chữ cái: <code>*C. TP.HCM</code></li>
-        <li>Hoặc dòng riêng: <code>Đáp án: C</code></li>
+        <li>Dấu <code>*</code> trước chữ cái: <code>*C. TP.HCM</code>, <code>* C. TP.HCM</code></li>
+        <li>Hoặc dòng riêng: <code>Đáp án: C</code>, <code>Answer: C</code></li>
       </ul>
     </div>
 
@@ -720,6 +441,16 @@ D. Cần Thơ</pre>
         <li><code>Câu 1:</code> · <code>Câu 1.</code> · <code>Câu 1)</code></li>
         <li><code>Question 1:</code> (tiếng Anh)</li>
         <li><code>1.</code> · <code>1)</code> (khi không có "Câu")</li>
+        <li>Có thể trộn nhiều định dạng trong cùng 1 file</li>
+      </ul>
+    </div>
+
+    <div class="help-section">
+      <h4>🔤 Đáp án được hỗ trợ</h4>
+      <ul>
+        <li>Từ <code>A</code> đến <code>Z</code> (không chỉ A-D)</li>
+        <li>Dấu phân cách: <code>.</code> · <code>)</code> · <code>:</code></li>
+        <li>Nếu 1 câu không có đáp án đúng → hiện cảnh báo, không chấm điểm câu đó</li>
       </ul>
     </div>
 
@@ -740,6 +471,7 @@ D. Cần Thơ</pre>
         <li>Bài làm được tự động lưu — lỡ đóng tab vẫn còn</li>
         <li>Có thể ẩn/hiện đồng hồ đếm thời gian</li>
         <li>Sau khi nộp, bấm "Xem lại" để thấy câu nào đúng/sai</li>
+        <li>Câu có đáp án lỗi hiển thị badge tím</li>
       </ul>
     </div>
   </div>
@@ -755,10 +487,9 @@ D. Cần Thơ</pre>
 const $ = id => document.getElementById(id);
 const $$ = sel => document.querySelectorAll(sel);
 
-// Trạng thái lưu trữ
 const LS = {
-  dark: 'quiz_dark',
-  session: 'quiz_session_v1'
+  dark: 'quiz_dark_v3',
+  session: 'quiz_session_v3'
 };
 
 /* ==================== UTILS ==================== */
@@ -793,6 +524,13 @@ function shuffleArray(arr){
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
+}
+
+function idxToLetter(i){
+  return String.fromCharCode(65 + i);
+}
+function letterToIdx(ch){
+  return ch.charCodeAt(0) - 65;
 }
 
 /* ==================== THEME ==================== */
@@ -862,7 +600,6 @@ async function readPdf(file, onProgress){
   for (let i = 1; i <= pdf.numPages; i++){
     const page = await pdf.getPage(i);
     const content = await page.getTextContent();
-    // Ghép text theo thứ tự, có xuống dòng khi item có `hasEOL`
     let pageText = '';
     let lastY = null;
     for (const item of content.items){
@@ -880,54 +617,62 @@ async function readPdf(file, onProgress){
   return text;
 }
 
-/* ==================== PARSER ==================== */
+/* ============================================================
+   ============ PARSER v3 — FIX TOÀN DIỆN =====================
+   Hỗ trợ:
+     - Câu X: / Câu X. / Câu X) / Question X: / X. / X)
+     - Đáp án A-Z (không chỉ A-D)
+     - *A. / * A. / *A) / * A)
+     - Dòng riêng: "Đáp án: X" / "Answer: X" / "Đáp án. X" / "Đáp án - X"
+     - Duplicate letter merge (E. Năm + *E. Năm → 1 option correct)
+     - Câu hỏi dài có dấu chấm, ký tự đặc biệt, emoji
+     - Mixed formats trong cùng file
+   ============================================================ */
+
+/* ---- Regex patterns ---- */
+// Question starts
+const RE_Q_CAU = /^(?:Câu|Question)\s+\d+\s*[:.)\]]?\s/i;
+const RE_Q_NUM = /^\d+\s*[.):\]]\s*\S/;
+// Strip question prefix
+const RE_STRIP_CAU = /^(?:Câu|Question)\s+\d+\s*[:.)\]]?\s*/i;
+const RE_STRIP_NUM = /^\d+\s*[.):\]]\s*/;
+// Answer line: "Đáp án: X", "Answer: X", "Đáp án. X", "Đáp án - X", "Đáp án X"
+const RE_ANSWER = /^(?:[Đđ]áp\s*án|Answer)\s*[:.=\-]?\s*([A-Z])\b/i;
+// Option line: optional "*", optional space, letter A-Z, one of .):, then space(s), content
+const RE_OPTION = /^(\*)?\s*([A-Z])\s*[.):]\s+(.+)$/;
+
 /**
- * Parse đề thi từ text.
- * Hỗ trợ nhiều định dạng:
- *   - "Câu 1:", "Câu 1.", "Câu 1)", "Question 1:"
- *   - "1.", "1)" (nếu không có chữ "Câu")
- *   - Đáp án: A. / A) / a. / A - / *A. / * A.
- *   - Đánh dấu đáp án đúng: dấu * hoặc "Đáp án: X"
+ * Parse toàn bộ đề
  */
 function parseQuestions(rawText){
   if (!rawText || !rawText.trim()) return [];
 
-  // 1. Chuẩn hoá line endings
-  let text = rawText.replace(/\r\n?/g, '\n');
+  // 1. Normalize line endings + non-breaking space
+  let text = rawText.replace(/\r\n?/g, '\n').replace(/\u00A0/g, ' ');
 
-  // 2. Chuẩn hoá khoảng trắng xấu từ PDF
-  text = text.replace(/\u00A0/g, ' ');
+  // 2. Insert newline before inline question starts
+  //    Ví dụ: "...option D Câu 2: ..." → "...option D\nCâu 2: ..."
+  text = text.replace(
+    /([^\n])\s+(?=(?:Câu|Question)\s+\d+\s*[:.)\]]?(?=\s|$))/gi,
+    '$1\n'
+  );
 
-  // 3. Detect xem có dùng tiền tố "Câu" / "Question" hay không
-  const hasCau = /(?:^|\n)\s*(?:Câu|Question)\s+\d+/i.test(text)
-              || /[^\w](?:Câu|Question)\s+\d+\s*[:.)\]]/i.test(text);
-
-  // 4. Insert newline trước mỗi câu hỏi nếu bị dính dòng
-  if (hasCau){
-    text = text.replace(
-      /([^\n])\s+(?=(?:Câu|Question)\s+\d+\s*[:.)\]]?(?=\s|$))/gi,
-      '$1\n'
-    );
-  } else {
-    // Fallback: "1." "1)" đầu dòng sau khi đã có \n
-    text = text.replace(
-      /([^\n])\s+(?=\d+\s*[.)\]]\s+[A-ZÀ-Ỹ])/g,
-      '$1\n'
-    );
-  }
-
-  // 5. Split thành lines
+  // 3. Split lines, trim, remove empty
   const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
 
-  // 6. Gom thành blocks (mỗi block = 1 câu hỏi)
+  // 4. Group into blocks — each block = 1 question (question text + option lines)
   const blocks = [];
   let cur = null;
-  const isQStart = hasCau
-    ? (l) => /^(?:Câu|Question)\s+\d+\s*[:.)\]]?/i.test(l)
-    : (l) => /^\d+\s*[.)\]]\s+\S/.test(l);
-  const stripQMark = hasCau
-    ? (l) => l.replace(/^(?:Câu|Question)\s+\d+\s*[:.)\]]?\s*/i, '')
-    : (l) => l.replace(/^\d+\s*[.)\]]\s*/, '');
+
+  const isQStart = (line) => RE_Q_CAU.test(line) || RE_Q_NUM.test(line);
+  const stripQMark = (line) => {
+    let result = line.replace(RE_STRIP_CAU, '');
+    // Only apply number strip if result is unchanged (i.e. no "Câu/Question" prefix found)
+    if (result === line){
+      result = line.replace(RE_STRIP_NUM, '');
+    }
+    return result;
+  };
 
   for (const line of lines){
     if (isQStart(line)){
@@ -936,77 +681,95 @@ function parseQuestions(rawText){
     } else if (cur){
       cur.push(line);
     }
+    // Lines before the first question are ignored
   }
   if (cur) blocks.push(cur);
 
-  // 7. Parse từng block
+  // 5. Parse each block
   const questions = [];
   for (const blockLines of blocks){
     const q = parseBlock(blockLines);
-    if (q) questions.push(q);
+    if (q && q.options.length >= 2) questions.push(q);
   }
   return questions;
 }
 
+/**
+ * Parse 1 block (question + options + answer line)
+ */
 function parseBlock(lines){
-  // Ghép thành 1 chuỗi để xử lý chung (cả DOCX 1 dòng/option và PDF cùng dòng)
-  const full = lines.join(' ').replace(/\s+/g, ' ').trim();
-  if (!full) return null;
+  if (!lines.length) return null;
 
-  // Tìm tất cả các option marker: [*]?[A-D][.):] + khoảng trắng
-  const re = /(^|\s)(\*)?\s*([A-D])\s*[.):]\s+/g;
-  const marks = [];
-  let m;
-  while ((m = re.exec(full)) !== null){
-    marks.push({
-      start: m.index + m[1].length,       // vị trí bắt đầu của * hoặc chữ
-      contentStart: m.index + m[0].length, // vị trí bắt đầu nội dung
-      isCorrect: m[2] === '*',
-      letter: m[3].toUpperCase()
-    });
+  // Step 1: Split any line that combines question + first option
+  //   Ví dụ: "What is X? A. Option1" → ["What is X?", "A. Option1"]
+  //   Chỉ split nếu option mới bắt đầu bằng A (option đầu tiên)
+  const expanded = [];
+  for (const line of lines){
+    const splitMatch = line.match(/^([\s\S]{3,}?)\s+((?:\*)?\s*A\s*[.):]\s+[\s\S]+)$/);
+    if (splitMatch && splitMatch[1].trim()){
+      expanded.push(splitMatch[1].trim());
+      expanded.push(splitMatch[2].trim());
+    } else {
+      expanded.push(line);
+    }
   }
 
-  if (marks.length < 2) return null;
+  // Step 2: Classify lines into question text / options / answer letter
+  const questionParts = [];
+  const options = []; // [{ letter, content, isCorrect }]
+  let correctLetterFromAnswer = null;
 
-  // 8. Question text = phần trước marker đầu tiên
-  let qText = full.substring(0, marks[0].start).trim();
-  // Bỏ "Đáp án: X" nếu nó nằm lẫn trong question
-  qText = qText.replace(/[Đđ]áp\s*án\s*[:.]?\s*[A-D]\b/gi, '').trim();
-
-  // 9. Lấy options
-  const options = [];
-  for (let i = 0; i < marks.length; i++){
-    const start = marks[i].contentStart;
-    const end = i + 1 < marks.length ? marks[i + 1].start : full.length;
-    let optText = full.substring(start, end).trim().replace(/\s+/g, ' ');
-    // Bỏ "Đáp án: X" ở cuối option
-    optText = optText.replace(/\s*[Đđ]áp\s*án\s*[:.]?\s*[A-D]\b.*$/i, '').trim();
-    // Bỏ dấu chấm câu thừa ở cuối
-    optText = optText.replace(/[.;,]\s*$/, '').trim();
-    if (optText){
-      options.push({ text: optText, letter: marks[i].letter, isCorrect: marks[i].isCorrect });
+  for (const line of expanded){
+    // 2a. Answer line: "Đáp án: X" / "Answer: X"
+    const am = line.match(RE_ANSWER);
+    if (am){
+      correctLetterFromAnswer = am[1].toUpperCase();
+      continue;
     }
+
+    // 2b. Option line: "*A. content" / "A. content" / "* B) content"
+    const om = line.match(RE_OPTION);
+    if (om){
+      const isCorrect = !!om[1];
+      const letter = om[2].toUpperCase();
+      const content = om[3].trim();
+
+      // Merge if duplicate letter (e.g. "E. Năm" followed by "*E. Năm")
+      const existingIdx = options.findIndex(o => o.letter === letter);
+      if (existingIdx >= 0){
+        if (isCorrect) options[existingIdx].isCorrect = true;
+        // Keep the longer content (in case of splits)
+        if (content.length > options[existingIdx].content.length){
+          options[existingIdx].content = content;
+        }
+      } else {
+        options.push({ letter, content, isCorrect });
+      }
+      continue;
+    }
+
+    // 2c. Otherwise: question text
+    questionParts.push(line);
   }
 
   if (options.length < 2) return null;
 
-  // 10. Xác định đáp án đúng
-  let correctIndex = options.findIndex(o => o.isCorrect);
+  // Step 3: Sort options by letter (A → Z)
+  options.sort((a, b) => a.letter.charCodeAt(0) - b.letter.charCodeAt(0));
 
-  // Fallback: tìm "Đáp án: X" trong toàn bộ text
-  if (correctIndex === -1){
-    const am = full.match(/[Đđ]áp\s*án\s*[:.]?\s*([A-D])\b/i)
-            || full.match(/\bAnswer\s*[:.]?\s*([A-D])\b/i);
-    if (am){
-      const letter = am[1].toUpperCase();
-      const idx = options.findIndex(o => o.letter === letter);
-      if (idx >= 0) correctIndex = idx;
-    }
+  // Step 4: Determine correct index
+  let correctIndex = options.findIndex(o => o.isCorrect);
+  if (correctIndex === -1 && correctLetterFromAnswer){
+    correctIndex = options.findIndex(o => o.letter === correctLetterFromAnswer);
   }
+
+  // Step 5: Build question object
+  const qText = questionParts.join(' ').replace(/\s+/g, ' ').trim();
 
   return {
     questionText: qText || '(Không có nội dung)',
-    options: options.map(o => o.text),
+    options: options.map(o => o.content),
+    letters: options.map(o => o.letter),   // giữ lại để debug
     correctIndex
   };
 }
@@ -1054,11 +817,16 @@ $('processBtn').addEventListener('click', async () => {
       throw new Error('Không tìm thấy câu hỏi nào. Kiểm tra lại định dạng (xem Hướng dẫn).');
     }
 
-    // Preview trước khi bắt đầu
     showPreview(questions);
 
+    const invalidCount = questions.filter(q => q.correctIndex === -1).length;
     status.className = 'status-msg success';
-    status.textContent = `✅ Đã tìm thấy ${questions.length} câu hỏi. Bấm "Bắt đầu làm bài" bên dưới.`;
+    if (invalidCount > 0){
+      status.className = 'status-msg error';
+      status.textContent = `⚠️ Đã tìm thấy ${questions.length} câu, nhưng có ${invalidCount} câu thiếu đáp án đúng. Kiểm tra lại file.`;
+    } else {
+      status.textContent = `✅ Đã tìm thấy ${questions.length} câu hỏi. Bấm "Bắt đầu làm bài" bên dưới.`;
+    }
     progressFill.style.width = '100%';
 
     // Hiện nút bắt đầu
@@ -1113,8 +881,8 @@ function showPreview(questions){
 
 /* ==================== QUIZ STATE ==================== */
 let quiz = {
-  questions: [],       // mảng câu hỏi đã xáo trộn
-  answers: [],         // chỉ số đáp án đã chọn, -1 = chưa làm
+  questions: [],
+  answers: [],
   startTime: 0,
   elapsed: 0,
   timerId: null,
@@ -1128,10 +896,11 @@ function startQuiz(originalQuestions){
   const doShuffleQ = $('shuffleQ').checked;
   const doShuffleOpt = $('shuffleOpt').checked;
 
-  // Copy sâu
+  // Deep copy
   let qs = originalQuestions.map(q => ({
     questionText: q.questionText,
     options: q.options.slice(),
+    letters: (q.letters || []).slice(),
     correctIndex: q.correctIndex
   }));
 
@@ -1143,10 +912,16 @@ function startQuiz(originalQuestions){
       const idxs = q.options.map((_, i) => i);
       const shuffled = shuffleArray(idxs);
       const newOptions = shuffled.map(i => q.options[i]);
-      const newCorrect = shuffled.indexOf(q.correctIndex);
+      // Gán lại letter theo vị trí mới
+      const newLetters = shuffled.map((_, pos) => idxToLetter(pos));
+      // Tìm vị trí mới của đáp án đúng
+      const newCorrect = q.correctIndex >= 0
+        ? shuffled.indexOf(q.correctIndex)
+        : -1;
       return {
         questionText: q.questionText,
         options: newOptions,
+        letters: newLetters,
         correctIndex: newCorrect
       };
     });
@@ -1181,7 +956,7 @@ function renderQuiz(){
       <label class="opt" data-q="${qi}" data-o="${oi}">
         <input type="radio" name="q${qi}" value="${oi}"
                ${quiz.answers[qi] === oi ? 'checked' : ''}>
-        <span class="key">${String.fromCharCode(65 + oi)}.</span>
+        <span class="key">${idxToLetter(oi)}.</span>
         <span>${escapeHtml(o)}</span>
       </label>
     `).join('');
@@ -1196,7 +971,6 @@ function renderQuiz(){
     `;
   }).join('');
 
-  // Delegated change
   c.addEventListener('change', e => {
     if (quiz.submitted) return;
     if (e.target.matches('input[type=radio]')){
@@ -1204,7 +978,6 @@ function renderQuiz(){
       const qi = parseInt(label.dataset.q, 10);
       const oi = parseInt(e.target.value, 10);
       quiz.answers[qi] = oi;
-      // Update selected class
       c.querySelectorAll(`.opt[data-q="${qi}"]`).forEach(el => el.classList.remove('selected'));
       label.classList.add('selected');
       updateProgress();
@@ -1220,9 +993,11 @@ function renderNavigator(){
   grid.innerHTML = quiz.questions.map((_, i) => {
     let cls = 'nav-dot';
     if (quiz.submitted){
+      const q = quiz.questions[i];
       const ans = quiz.answers[i];
-      if (ans === -1) cls += ' ';
-      else if (ans === quiz.questions[i].correctIndex) cls += ' correct';
+      if (q.correctIndex === -1) cls += ' invalid';
+      else if (ans === -1) cls += ' ';
+      else if (ans === q.correctIndex) cls += ' correct';
       else cls += ' wrong';
     } else if (quiz.answers[i] !== -1){
       cls += ' answered';
@@ -1288,52 +1063,73 @@ function submitQuiz(){
   quiz.submitted = true;
   stopTimer();
 
-  let correct = 0, wrong = 0, skipped = 0;
+  let correct = 0, wrong = 0, skipped = 0, invalid = 0;
   quiz.questions.forEach((q, i) => {
     const a = quiz.answers[i];
+    if (q.correctIndex === -1){ invalid++; return; }
     if (a === -1) skipped++;
     else if (a === q.correctIndex) correct++;
     else wrong++;
   });
 
-  // Hiển thị kết quả trên từng câu
+  // Update từng câu
   quiz.questions.forEach((q, i) => {
     const card = $('qcard-' + i);
     if (!card) return;
     const a = quiz.answers[i];
-    if (a === -1) card.classList.add('skipped');
-    else if (a === q.correctIndex) card.classList.add('correct');
-    else card.classList.add('wrong');
+
+    if (q.correctIndex === -1){
+      card.classList.add('invalid');
+    } else if (a === -1){
+      card.classList.add('skipped');
+    } else if (a === q.correctIndex){
+      card.classList.add('correct');
+    } else {
+      card.classList.add('wrong');
+    }
 
     card.querySelectorAll('.opt').forEach((el, oi) => {
       el.querySelector('input').disabled = true;
       el.classList.remove('selected');
-      if (oi === q.correctIndex) el.classList.add('correct-answer');
-      if (oi === a && oi !== q.correctIndex) el.classList.add('wrong-answer');
+      if (q.correctIndex >= 0 && oi === q.correctIndex) el.classList.add('correct-answer');
+      if (q.correctIndex >= 0 && oi === a && oi !== q.correctIndex) el.classList.add('wrong-answer');
     });
 
-    // Badge đáp án đúng
+    // Badge
     const badge = document.createElement('div');
-    badge.className = 'answer-badge ' + (a === q.correctIndex ? 'ok' : 'bad');
-    const text = a === q.correctIndex ? '✅ Chính xác' :
-                 a === -1 ? `⚠️ Bỏ trống · Đáp án: ${String.fromCharCode(65 + q.correctIndex)}` :
-                 `❌ Sai · Đáp án đúng: ${String.fromCharCode(65 + q.correctIndex)}`;
+    let badgeCls = 'answer-badge';
+    let text;
+    if (q.correctIndex === -1){
+      badgeCls += ' invalid';
+      text = '⚠️ Câu hỏi lỗi — không có đáp án đúng trong dữ liệu';
+    } else if (a === q.correctIndex){
+      badgeCls += ' ok';
+      text = `✅ Chính xác`;
+    } else if (a === -1){
+      badgeCls += ' bad';
+      text = `⚠️ Bỏ trống · Đáp án: ${idxToLetter(q.correctIndex)}`;
+    } else {
+      badgeCls += ' bad';
+      text = `❌ Sai · Đáp án đúng: ${idxToLetter(q.correctIndex)}`;
+    }
+    badge.className = badgeCls;
     badge.innerHTML = text;
     card.appendChild(badge);
   });
 
   renderNavigator();
-  showScore(correct, wrong, skipped);
+  showScore(correct, wrong, skipped, invalid);
   saveSession();
 }
 
 /* ==================== SCORE MODAL ==================== */
-function showScore(correct, wrong, skipped){
+function showScore(correct, wrong, skipped, invalid){
   const total = quiz.questions.length;
-  const pct = total ? (correct / total) * 100 : 0;
+  const gradable = total - (invalid || 0);
+  const pct = gradable ? (correct / gradable) * 100 : 0;
 
   $('scoreNum').textContent = correct;
-  $('scoreTotal').textContent = total;
+  $('scoreTotal').textContent = gradable;
   $('scorePct').textContent = pct.toFixed(1) + '%';
   $('statCorrect').textContent = correct;
   $('statWrong').textContent = wrong;
@@ -1345,11 +1141,12 @@ function showScore(correct, wrong, skipped){
   else if (pct >= 65) rank = '👍 Khá';
   else if (pct >= 50) rank = '📚 Trung bình';
   else rank = '💪 Cần cố gắng';
+  if (invalid > 0){
+    rank += ` · ${invalid} câu lỗi`;
+  }
   $('scoreRank').textContent = rank;
 
   $('scoreModal').classList.add('open');
-
-  // Confetti khi điểm cao
   if (pct >= 80) shootConfetti();
 }
 
@@ -1430,15 +1227,20 @@ $('exportBtn').addEventListener('click', () => {
   let correct = 0;
   quiz.questions.forEach((q, i) => {
     const a = quiz.answers[i];
-    const isCorrect = a === q.correctIndex;
+    const isCorrect = q.correctIndex >= 0 && a === q.correctIndex;
     if (isCorrect) correct++;
     lines.push(`Câu ${i+1}: ${q.questionText}`);
     q.options.forEach((o, oi) => {
       const marker = oi === q.correctIndex ? '✓' : ' ';
       const chosen = oi === a ? ' ←' : '';
-      lines.push(`  ${marker} ${String.fromCharCode(65+oi)}. ${o}${chosen}`);
+      lines.push(`  ${marker} ${idxToLetter(oi)}. ${o}${chosen}`);
     });
-    lines.push(`→ ${a === -1 ? 'Bỏ trống' : isCorrect ? 'Đúng' : 'Sai'}`);
+    let status;
+    if (q.correctIndex === -1) status = 'Câu lỗi (không có đáp án)';
+    else if (a === -1) status = 'Bỏ trống';
+    else if (isCorrect) status = 'Đúng';
+    else status = 'Sai';
+    lines.push(`→ ${status}`);
     lines.push('');
   });
   lines.push(`ĐIỂM: ${correct}/${total} (${(correct/total*100).toFixed(1)}%)`);
@@ -1456,13 +1258,11 @@ $('exportBtn').addEventListener('click', () => {
 
 /* ==================== KEYBOARD SHORTCUTS ==================== */
 document.addEventListener('keydown', e => {
-  // Ctrl+/
   if ((e.ctrlKey || e.metaKey) && e.key === '/'){
     e.preventDefault();
     $('helpModal').classList.add('open');
     return;
   }
-  // Ctrl+Enter submit
   if ((e.ctrlKey || e.metaKey) && e.key === 'Enter'){
     if (!$('quizView').classList.contains('hidden') && !quiz.submitted){
       e.preventDefault();
@@ -1470,10 +1270,8 @@ document.addEventListener('keydown', e => {
     }
     return;
   }
-  // Number keys 1-4 to select
   if (!$('quizView').classList.contains('hidden') && !quiz.submitted){
-    if (/^[1-4]$/.test(e.key)){
-      // Find current question in view
+    if (/^[1-9]$/.test(e.key)){
       const cards = Array.from($$('.question-card'));
       const viewportMid = window.innerHeight / 3;
       let currentCard = null;
@@ -1490,7 +1288,6 @@ document.addEventListener('keydown', e => {
         if (input){ input.checked = true; input.dispatchEvent(new Event('change', {bubbles:true})); }
       }
     }
-    // Arrow right/left for next/prev question
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
       const cards = Array.from($$('.question-card'));
       const viewportTop = 150;
@@ -1535,7 +1332,6 @@ function tryRestoreSession(){
   try {
     const s = JSON.parse(raw);
     if (!s.questions || !s.questions.length) return;
-    // Chỉ hỏi nếu phiên trong 6h gần đây
     if (Date.now() - (s.savedAt || 0) > 6 * 3600 * 1000){
       localStorage.removeItem(LS.session);
       return;
@@ -1556,10 +1352,7 @@ function tryRestoreSession(){
       renderNavigator();
       updateProgress();
       if (!quiz.submitted) startTimer();
-      else {
-        // Đã submit trước đó, hiển thị lại
-        submitQuiz();
-      }
+      else submitQuiz();
     } else {
       localStorage.removeItem(LS.session);
     }
@@ -1576,12 +1369,10 @@ $('helpBtn').addEventListener('click', () => {
 /* ==================== INIT ==================== */
 tryRestoreSession();
 
-// Save trước khi rời trang
 window.addEventListener('beforeunload', () => {
   if (quiz.questions.length && !quiz.submitted) saveSession();
 });
 
-// Auto-save khi làm bài (debounced)
 document.addEventListener('input', e => {
   if (e.target.matches('input[type=radio]') && quiz.questions.length) saveSessionDebounced();
 });
