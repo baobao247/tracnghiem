@@ -1,9 +1,13 @@
-(function(){
 'use strict';
 
-/* ==================== DOM ==================== */
+/* ==================== DOM & HELPERS ==================== */
 const $ = id => document.getElementById(id);
 const $$ = sel => document.querySelectorAll(sel);
+
+if (typeof window !== 'undefined') {
+  window.$ = $;
+  window.$$ = $$;
+}
 
 const LS = {
   dark: 'quiz_dark_v3',
@@ -96,4 +100,3 @@ fileInput.addEventListener('change', () => {
 function showFileInfo(f){
   fileInfo.innerHTML = `<i class="fas fa-file"></i> ${escapeHtml(f.name)} · ${(f.size/1024).toFixed(1)} KB`;
 }
-})();
